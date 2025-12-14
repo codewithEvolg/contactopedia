@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FavouriteContacts } from "./FavouriteContacts";
+import GeneralContacts from "./GeneralContacts";
 
 const ContactIndex = () => {
   const [contactList, setContactList] = useState([
@@ -14,17 +15,25 @@ const ContactIndex = () => {
       id: 2,
       name: "Kathy Patrick",
       phone: "111-222-3333",
-      email: "ben@gmail.com",
+      email: "kathy@gmail.com",
       isFavourite: true,
     },
     {
       id: 3,
       name: "Paul Show",
-      phone: "000,222,4444",
-      email: "ben@gmail.com",
+      phone: "000-222-4444",
+      email: "paul@gmail.com",
       isFavourite: false,
     },
   ]);
+
+  const handleToggleFavourite = (id) => {
+    setContactList((prev) => {
+      return prev.map((a) =>
+        a.id === id ? { ...a, isFavourite: !a.isFavourite } : a
+      );
+    });
+  };
 
   return (
     <div className="container" style={{ minHeight: "85vh" }}>
@@ -40,11 +49,17 @@ const ContactIndex = () => {
           <div className="col-12">
             <FavouriteContacts
               contacts={contactList.filter((u) => u.isFavourite === true)}
+              toggleFavourites={handleToggleFavourite}
             />
           </div>
         </div>
         <div className="py-2">
-          <div className="col-12">General Contact</div>
+          <div className="col-12">
+            <GeneralContacts
+              contacts={contactList.filter((u) => u.isFavourite === false)}
+              toggleFavourites={handleToggleFavourite}
+            />
+          </div>
         </div>
       </div>
     </div>

@@ -6,22 +6,27 @@ const Contact = (props) => {
     >
       <div className="col-2 pt-2">
         <img
-          src={`https://ui-avatars.com/api/?name=${props.info.name}`}
+          src={`https://ui-avatars.com/api/?name=${props.contact.name}`}
           style={{ width: "80%", borderRadius: "20px" }}
         />
       </div>
       <div className="col-6 text-warning pt-0">
-        <span className="h4">{props.info.name}</span>
+        <span className="h4">{props.contact.name}</span>
         <br />
         <div className="text-white-50">
-          {props.info.email}
+          {props.contact.email}
           <br />
-          {props.info.phone}
+          {props.contact.phone}
         </div>
       </div>
       <div className="col-1 pt-2">
         <button className="btn btn-primary btn-sm m-1">
-          <i className="bi bi-star-fill"></i>
+          <i
+            className={`bi ${
+              props.contact.isFavourite ? "bi-star-fill" : "bi-star"
+            }`}
+            onClick={() => props.toggleFavourites(props.contact.id)}
+          ></i>
         </button>
       </div>
       <div className="col-3 pt-2">
