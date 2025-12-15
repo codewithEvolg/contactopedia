@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FavouriteContacts } from "./FavouriteContacts";
 import GeneralContacts from "./GeneralContacts";
+import AddContact from "./AddContact";
 
 const ContactIndex = () => {
   const [contactList, setContactList] = useState([
@@ -35,6 +36,12 @@ const ContactIndex = () => {
     });
   };
 
+  const handleDeleteContact = (id) => {
+    setContactList((prev) => {
+      return prev.filter((a) => a.id !== id);
+    });
+  };
+
   return (
     <div className="container" style={{ minHeight: "85vh" }}>
       <div className="py-3">
@@ -43,13 +50,16 @@ const ContactIndex = () => {
           <div className="col-6">Remove Contact</div>
         </div>
         <div className="py-2">
-          <div className="col-12">Form to add new Contact</div>
+          <div className="col-12">
+            <AddContact />
+          </div>
         </div>
         <div className="py-2">
           <div className="col-12">
             <FavouriteContacts
               contacts={contactList.filter((u) => u.isFavourite === true)}
               toggleFavourites={handleToggleFavourite}
+              deleteContact={handleDeleteContact}
             />
           </div>
         </div>
@@ -58,6 +68,7 @@ const ContactIndex = () => {
             <GeneralContacts
               contacts={contactList.filter((u) => u.isFavourite === false)}
               toggleFavourites={handleToggleFavourite}
+              deleteContact={handleDeleteContact}
             />
           </div>
         </div>
