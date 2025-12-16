@@ -1,7 +1,12 @@
+import { useState } from "react";
+
 const AddContact = () => {
-  const handleAddContactForm = (e) => {
-    e.preventDefault(); //prevents the page from reloading
-    const formData = new FormData(e.target); //an easier way to retrieve the form data
+  const [message, SetMessages] = useState({
+    errorMessage: "",
+    successMessage: "",
+  });
+
+  const handleAddContactForm = (formData) => {
     const contactData = {
       name: formData.get("name"),
       email: formData.get("email"),
@@ -10,11 +15,17 @@ const AddContact = () => {
       contactMethod: formData.get("contactMethod"),
       interests: formData.getAll("interests[]"),
     };
-    console.log(contactData);
+
+    try {
+      console.log(contactData);
+    } catch (error) {
+      console.error("Error adding contact", error);
+    }
   };
+
   return (
     <div className="border col-12 text-white p-2">
-      <form action="" onSubmit={handleAddContactForm}>
+      <form action={handleAddContactForm}>
         <div className="row p-2">
           <div className="col-12 text-white-50 text-center h5">Add Contact</div>
           <div className="col-12 col-md-4 p-1">
@@ -80,13 +91,16 @@ const AddContact = () => {
               </label>
             </div>
           </div>
-          <div className="col-12 text-center text-success">Success Message</div>
-          <div className="col-12 text-center text-danger">Error Message</div>
+          {message.successMessage && (
+            <div className="col-12 text-center text-success">
+              Success Message
+            </div>
+          )}
+          {message.errorMessage && (
+            <div className="col-12 text-center text-danger">Error Message</div>
+          )}
           <div className="col-6">
-            <button
-              className="btn btn-primary btn-sm form-control"
-              type="submit"
-            >
+            <button className="btn btn-primary btn-sm form-control">
               Create
             </button>
           </div>
