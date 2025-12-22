@@ -36,6 +36,17 @@ const ContactIndex = () => {
     });
   };
 
+  const handleAddContact = (newContact) => {
+    const newFinalContact = {
+      ...newContact,
+      id: contactList.length + 1,
+      isFavourite: false,
+    };
+    setContactList((prev) => {
+      return [...prev, newFinalContact];
+    });
+  };
+
   const handleDeleteContact = (id) => {
     setContactList((prev) => {
       return prev.filter((a) => a.id !== id);
@@ -51,7 +62,7 @@ const ContactIndex = () => {
         </div>
         <div className="py-2">
           <div className="col-12">
-            <AddContact />
+            <AddContact addContact={handleAddContact} />
           </div>
         </div>
         <div className="py-2">

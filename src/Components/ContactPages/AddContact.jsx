@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-const AddContact = () => {
+const AddContact = (props) => {
   const [message, SetMessages] = useState({
     errorMessage: "",
     successMessage: "",
@@ -11,13 +11,14 @@ const AddContact = () => {
       name: formData.get("name"),
       email: formData.get("email"),
       phone: formData.get("phone"),
-      newsletter: formData.get("newsletter") === "on",
-      contactMethod: formData.get("contactMethod"),
-      interests: formData.getAll("interests[]"),
+      // newsletter: formData.get("newsletter") === "on",
+      // contactMethod: formData.get("contactMethod"),
+      // interests: formData.getAll("interests[]"),
     };
 
     try {
       console.log(contactData);
+      props.addContact(contactData);
     } catch (error) {
       console.error("Error adding contact", error);
     }
