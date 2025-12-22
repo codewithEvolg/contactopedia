@@ -45,6 +45,8 @@ const ContactIndex = () => {
     setContactList((prev) => {
       return [...prev, newFinalContact];
     });
+
+    return { status: "success", msg: "Contact was added successfully!" };
   };
 
   const handleDeleteContact = (id) => {
