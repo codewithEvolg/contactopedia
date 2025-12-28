@@ -29,6 +29,15 @@ const ContactIndex = () => {
     },
   ]);
 
+  const [selectedContact, SetSelectedContact] = useState(null);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const handleUpdateClick = (contact) => {
+    console.log(contact);
+    SetSelectedContact(contact);
+    setIsUpdating(true);
+  };
+
   const handleToggleFavourite = (id) => {
     setContactList((prev) => {
       return prev.map((a) =>
@@ -71,6 +80,11 @@ const ContactIndex = () => {
     setContactList([]);
   };
 
+  const handleCancelButton = () => {
+    SetSelectedContact(null);
+    setIsUpdating(false);
+  };
+
   return (
     <div className="container" style={{ minHeight: "85vh" }}>
       <div className="py-3">
@@ -87,7 +101,12 @@ const ContactIndex = () => {
         </div>
         <div className="py-2">
           <div className="col-12">
-            <AddContact addContact={handleAddContact} />
+            <AddContact
+              addContact={handleAddContact}
+              isUpdating={isUpdating}
+              selectedContact={selectedContact}
+              cancelButton={handleCancelButton}
+            />
           </div>
         </div>
         <div className="py-2">
@@ -96,6 +115,7 @@ const ContactIndex = () => {
               contacts={contactList.filter((u) => u.isFavourite === true)}
               toggleFavourites={handleToggleFavourite}
               deleteContact={handleDeleteContact}
+              updateContact={handleUpdateClick}
             />
           </div>
         </div>
@@ -105,6 +125,7 @@ const ContactIndex = () => {
               contacts={contactList.filter((u) => u.isFavourite === false)}
               toggleFavourites={handleToggleFavourite}
               deleteContact={handleDeleteContact}
+              updateContact={handleUpdateClick}
             />
           </div>
         </div>

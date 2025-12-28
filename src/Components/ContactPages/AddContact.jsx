@@ -1,10 +1,41 @@
-import { useState } from "react";
+import { useState, useEffect, use } from "react";
 
 const AddContact = (props) => {
   const [message, SetMessages] = useState({
     errorMessage: "",
     successMessage: "",
   });
+
+  const [formData, SetFormData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
+  useEffect(() => {
+    if (props.isUpdating && props.selectedContact) {
+      SetFormData({
+        name: props.selectedContact.name,
+        email: props.selectedContact.email,
+        phone: props.selectedContact.phone,
+      });
+    } else {
+      SetFormData({
+        name: "",
+        email: "",
+        phone: "",
+      });
+    }
+  }, [props.isUpdating, props.selectedContact]);
+
+  const handleFormInputChange = (e) => {
+    console.log(e.target.value);
+    const { name, value } = e.target;
+    SetFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
 
   const handleAddContactForm = (formData) => {
     const contactData = {
@@ -43,12 +74,16 @@ const AddContact = (props) => {
     <div className="border col-12 text-white p-2">
       <form action={handleAddContactForm}>
         <div className="row p-2">
-          <div className="col-12 text-white-50 text-center h5">Add Contact</div>
+          <div className="col-12 text-white-50 text-center h5">
+            {props.isUpdating ? "Edit Contact" : "Add Contact"}
+          </div>
           <div className="col-12 col-md-4 p-1">
             <input
               name="name"
               placeholder="Name..."
               className="form-control form-control-sm"
+              onChange={handleFormInputChange}
+              value={formData.name}
             />
           </div>
           <div className="col-12 col-md-4 p-1">
@@ -56,6 +91,8 @@ const AddContact = (props) => {
               name="email"
               placeholder="Email..."
               className="form-control form-control-sm"
+              onChange={handleFormInputChange}
+              value={formData.email}
             />
           </div>
           <div className="col-12 col-md-4 p-1">
@@ -63,6 +100,8 @@ const AddContact = (props) => {
               name="phone"
               placeholder="Phone..."
               className="form-control form-control-sm"
+              onChange={handleFormInputChange}
+              value={formData.phone}
             />
           </div>
           {/* <div className="col-12 p-1">
@@ -117,16 +156,25 @@ const AddContact = (props) => {
               {message.errorMessage}
             </div>
           )}
-          <div className="col-6">
-            <button className="btn btn-primary btn-sm form-control">
-              Create
+          <div className={`col-${props.isUpdating ? "6" : "12"}`}>
+            <button
+              className={`btn btn-${
+                props.isUpdating ? "primary" : "success"
+              } btn-sm form-control`}
+            >
+              {props.isUpdating ? "Update" : "Create Contact"}
             </button>
           </div>
-          <div className="col-6">
-            <button className="btn btn-danger btn-sm form-control">
-              Cancel
-            </button>
-          </div>
+          {props.isUpdating && (
+            <div className="col-6">
+              <button
+                className="btn btn-danger btn-sm form-control"
+                onClick={props.cancelButton}
+              >
+                Cancel
+              </button>
+            </div>
+          )}
         </div>
       </form>
     </div>
