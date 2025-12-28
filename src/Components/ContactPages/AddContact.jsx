@@ -63,6 +63,7 @@ const AddContact = (props) => {
           errorMessage: undefined,
           successMessage: response.msg,
         });
+        SetFormData({ name: "", email: "", phone: "" });
       } else {
         SetMessages({
           errorMessage: response.msg,
