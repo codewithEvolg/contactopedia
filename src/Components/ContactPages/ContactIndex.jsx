@@ -29,11 +29,11 @@ const ContactIndex = () => {
     },
   ]);
 
-  const [selectedContact, SetSelectedContact] = useState(null);
+  const [selectedContact, setSelectedContact] = useState(null);
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleUpdateClick = (contact) => {
-    SetSelectedContact(contact);
+    setSelectedContact(contact);
     setIsUpdating(true);
   };
 
@@ -59,7 +59,7 @@ const ContactIndex = () => {
       );
     });
 
-    SetSelectedContact(null);
+    setSelectedContact(null);
     setIsUpdating(false);
 
     return { status: "success", msg: "Contact was updated successfully!" };
@@ -100,7 +100,7 @@ const ContactIndex = () => {
   };
 
   const handleCancelButton = () => {
-    SetSelectedContact(null);
+    setSelectedContact(null);
     setIsUpdating(false);
   };
 

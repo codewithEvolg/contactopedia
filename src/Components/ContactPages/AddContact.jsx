@@ -1,12 +1,12 @@
 import { useState, useEffect, use } from "react";
 
 const AddContact = (props) => {
-  const [message, SetMessages] = useState({
+  const [message, setMessages] = useState({
     errorMessage: "",
     successMessage: "",
   });
 
-  const [formData, SetFormData] = useState({
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
@@ -14,13 +14,13 @@ const AddContact = (props) => {
 
   useEffect(() => {
     if (props.isUpdating && props.selectedContact) {
-      SetFormData({
+      setFormData({
         name: props.selectedContact.name,
         email: props.selectedContact.email,
         phone: props.selectedContact.phone,
       });
     } else {
-      SetFormData({
+      setFormData({
         name: "",
         email: "",
         phone: "",
@@ -30,7 +30,7 @@ const AddContact = (props) => {
 
   const handleFormInputChange = (e) => {
     const { name, value } = e.target;
-    SetFormData({
+    setFormData({
       ...formData,
       [name]: value,
     });
@@ -59,20 +59,20 @@ const AddContact = (props) => {
         response = props.addContact(contactData);
       }
       if (response.status === "success") {
-        SetMessages({
+        setMessages({
           errorMessage: undefined,
           successMessage: response.msg,
         });
-        SetFormData({ name: "", email: "", phone: "" });
+        setFormData({ name: "", email: "", phone: "" });
       } else {
-        SetMessages({
+        setMessages({
           errorMessage: response.msg,
           successMessage: undefined,
         });
       }
     } catch (error) {
       console.error("Error adding contact", error);
-      SetMessages({
+      setMessages({
         errorMessage: "Error Encountered!",
         successMessage: undefined,
       });
