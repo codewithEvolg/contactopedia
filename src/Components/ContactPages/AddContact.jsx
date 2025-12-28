@@ -29,7 +29,6 @@ const AddContact = (props) => {
   }, [props.isUpdating, props.selectedContact]);
 
   const handleFormInputChange = (e) => {
-    console.log(e.target.value);
     const { name, value } = e.target;
     SetFormData({
       ...formData,
@@ -48,8 +47,17 @@ const AddContact = (props) => {
     };
 
     try {
-      console.log(contactData);
-      const response = props.addContact(contactData);
+      let response = undefined;
+
+      if (props.isUpdating && props.selectedContact) {
+        response = props.updateContact({
+          id: props.selectedContact.id,
+          isFavourite: props.selectedContact.isFavourite,
+          ...contactData,
+        });
+      } else {
+        response = props.addContact(contactData);
+      }
       if (response.status === "success") {
         SetMessages({
           errorMessage: undefined,

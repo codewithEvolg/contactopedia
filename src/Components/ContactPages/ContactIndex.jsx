@@ -33,7 +33,6 @@ const ContactIndex = () => {
   const [isUpdating, setIsUpdating] = useState(false);
 
   const handleUpdateClick = (contact) => {
-    console.log(contact);
     SetSelectedContact(contact);
     setIsUpdating(true);
   };
@@ -44,6 +43,26 @@ const ContactIndex = () => {
         a.id === id ? { ...a, isFavourite: !a.isFavourite } : a
       );
     });
+  };
+
+  const handleUpdateContact = (contact) => {
+    setContactList((prev) => {
+      return prev.map((a) =>
+        a.id === contact.id
+          ? {
+              ...a,
+              name: contact.name,
+              phone: contact.phone,
+              email: contact.email,
+            }
+          : a
+      );
+    });
+
+    SetSelectedContact(null);
+    setIsUpdating(false);
+
+    return { status: "success", msg: "Contact was updated successfully!" };
   };
 
   const handleAddContact = (newContact) => {
@@ -106,6 +125,7 @@ const ContactIndex = () => {
               isUpdating={isUpdating}
               selectedContact={selectedContact}
               cancelButton={handleCancelButton}
+              updateContact={handleUpdateContact}
             />
           </div>
         </div>
@@ -115,7 +135,7 @@ const ContactIndex = () => {
               contacts={contactList.filter((u) => u.isFavourite === true)}
               toggleFavourites={handleToggleFavourite}
               deleteContact={handleDeleteContact}
-              updateContact={handleUpdateClick}
+              updateClick={handleUpdateClick}
             />
           </div>
         </div>
@@ -125,7 +145,7 @@ const ContactIndex = () => {
               contacts={contactList.filter((u) => u.isFavourite === false)}
               toggleFavourites={handleToggleFavourite}
               deleteContact={handleDeleteContact}
-              updateContact={handleUpdateClick}
+              updateClick={handleUpdateClick}
             />
           </div>
         </div>
