@@ -26,7 +26,7 @@ const AddContact = (props) => {
         });
       } else {
         SetMessages({
-          errorMessage: "Error Encountered!",
+          errorMessage: response.msg,
           successMessage: undefined,
         });
       }
@@ -65,13 +65,13 @@ const AddContact = (props) => {
               className="form-control form-control-sm"
             />
           </div>
-          <div className="col-12 p-1">
+          {/* <div className="col-12 p-1">
             <label>
               <input type="checkbox" name="newsletter" /> Subscribe to
               newsletter
             </label>
-          </div>
-          <div className="col-12 p-1">
+          </div> */}
+          {/* <div className="col-12 p-1">
             Contact Method:
             <div>
               <label>
@@ -86,8 +86,8 @@ const AddContact = (props) => {
                 <input type="radio" name="contactMethod" value="none" /> None
               </label>
             </div>
-          </div>
-          <div className="col-12 p-1">
+          </div> */}
+          {/* <div className="col-12 p-1">
             Interests (Select any):
             <div>
               <label>
@@ -106,7 +106,7 @@ const AddContact = (props) => {
                 Travel
               </label>
             </div>
-          </div>
+          </div> */}
           {message.successMessage && (
             <div className="col-12 text-center text-success">
               {message.successMessage}

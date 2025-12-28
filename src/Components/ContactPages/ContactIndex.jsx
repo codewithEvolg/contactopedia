@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FavouriteContacts } from "./FavouriteContacts";
 import GeneralContacts from "./GeneralContacts";
 import AddContact from "./AddContact";
+import Contact from "./Contact";
 
 const ContactIndex = () => {
   const [contactList, setContactList] = useState([
@@ -37,6 +38,17 @@ const ContactIndex = () => {
   };
 
   const handleAddContact = (newContact) => {
+    //validation
+    const duplicateRecord = contactList.filter((x) => {
+      if (x.name == newContact.name && x.phone == newContact.phone) {
+        return true;
+      }
+    });
+
+    if (duplicateRecord.length > 0) {
+      return { status: "error", msg: "Duplicate record!" };
+    }
+
     const newFinalContact = {
       ...newContact,
       id: contactList.length + 1,
