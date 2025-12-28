@@ -67,12 +67,23 @@ const ContactIndex = () => {
     });
   };
 
+  const handleRemoveAllContact = () => {
+    setContactList([]);
+  };
+
   return (
     <div className="container" style={{ minHeight: "85vh" }}>
       <div className="py-3">
         <div className="row py-2">
           <div className="col-6">Add Contact</div>
-          <div className="col-6">Remove Contact</div>
+          <div className="col-6">
+            <button
+              className="btn btn-danger form-control"
+              onClick={handleRemoveAllContact}
+            >
+              Remove all
+            </button>
+          </div>
         </div>
         <div className="py-2">
           <div className="col-12">
