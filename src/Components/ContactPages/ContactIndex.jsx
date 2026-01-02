@@ -3,6 +3,8 @@ import { FavouriteContacts } from "./FavouriteContacts";
 import GeneralContacts from "./GeneralContacts";
 import AddContact from "./AddContact";
 import Contact from "./Contact";
+import AddRandomContact from "./AddRandomContact";
+import getRandomUser from "../Utility/api";
 
 const ContactIndex = () => {
   const [contactList, setContactList] = useState([
@@ -43,6 +45,20 @@ const ContactIndex = () => {
         a.id === id ? { ...a, isFavourite: !a.isFavourite } : a
       );
     });
+  };
+
+  const handleAddRandomContactClick = async () => {
+    const response = await getRandomUser();
+    if (response && response.results && response.results.length > 0) {
+      const user = response.results[0];
+      const newRandomContact = {
+        name: `${user.name.title} ${user.name.first} ${user.name.last}`,
+        phone: user.phone,
+        email: user.email,
+      };
+
+      handleAddContact(newRandomContact);
+    }
   };
 
   const handleUpdateContact = (contact) => {
@@ -108,7 +124,11 @@ const ContactIndex = () => {
     <div className="container" style={{ minHeight: "85vh" }}>
       <div className="py-3">
         <div className="row py-2">
-          <div className="col-6">Add Contact</div>
+          <div className="col-6">
+            <AddRandomContact
+              handleAddRandomContactClick={handleAddRandomContactClick}
+            />
+          </div>
           <div className="col-6">
             <button
               className="btn btn-danger form-control"
